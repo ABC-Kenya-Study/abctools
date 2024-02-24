@@ -31,7 +31,7 @@ tp <- file.path(Sys.getenv("R_USER"), "R", "access_tokens", "abc_token.R")
 
 # collect REDCap data
 abc_data <- get_redcap_data(token_path = tp)
-#> 3,930 records and 2,438 columns were read from REDCap in 9.3 seconds.  The http status code was 200.
+#> 3,930 records and 2,438 columns were read from REDCap in 8.9 seconds.  The http status code was 200.
 ```
 
 ## Helper functions
@@ -45,9 +45,11 @@ are all NA:
 library(dplyr)
 library(stringr)
 
+# original number of columns in data from REDCap
 ncol(abc_data)
 #> [1] 2438
 
+# subset to enrollment rows, then drop columns with all NAs
 enroll <- abc_data |>
   filter(str_detect(redcap_event_name, 'Enrollment')) |>
   drop_vars_all_na()
@@ -74,6 +76,7 @@ enroll
 #> #   con_frmcompldate <date>, con_enr_sign <chr>, con_enr_version <chr>,
 #> #   con_complstaff_init_qc <chr>, con_review_staff_qc <chr>, …
 
+# number of columns in 'enroll'
 ncol(enroll)
 #> [1] 519
 ```

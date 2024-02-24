@@ -56,14 +56,17 @@ tasks. For instance, `drop_vars_all_na()` deletes columns that are all NA:
 library(dplyr)
 library(stringr)
 
+# original number of columns in data from REDCap
 ncol(abc_data)
 
+# subset to enrollment rows, then drop columns with all NAs
 enroll <- abc_data |>
   filter(str_detect(redcap_event_name, 'Enrollment')) |>
   drop_vars_all_na()
 
 enroll
 
+# number of columns in 'enroll'
 ncol(enroll)
 ```
 

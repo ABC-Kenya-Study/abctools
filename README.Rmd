@@ -58,13 +58,13 @@ library(stringr)
 
 ncol(abc_data)
 
-# enroll <- abc_data |>
-#   filter(str_detect(redcap_event_name, 'Enrollment')) |>
-#   drop_vars_all_na()
-# 
-# enroll
-# 
-# ncol(enroll)
+enroll <- abc_data |>
+  filter(str_detect(redcap_event_name, 'Enrollment')) |>
+  drop_vars_all_na()
+
+enroll
+
+ncol(enroll)
 ```
 
 Enjoy!

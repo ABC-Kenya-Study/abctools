@@ -26,8 +26,14 @@ devtools::install_github("ABC-Kenya-Study/abctools")
 ``` r
 library(abctools)
 
+# path to .R script containing ABC API token, e.g., "abc_token.R"
+tp <- file.path(Sys.getenv("R_USER"), "R", "access_tokens", "abc_token.R")
 
-## add example to get ABC data from REDcap.
+# collect REDCap data
+abc_data <- get_redcap_data(token_path = tp)
+#> The REDCapR read/export operation was not successful.  The error message was:
+#> ERROR: REDCap will be performing an upgrade on February 23rd from 6pm to 11pm.
+#> We apologize for any inconvenience, if you have any questions please contact the REDCap administrator at redcaphelp@uw.edu Thank you for you patience.
 ```
 
 ## Helper functions
@@ -38,13 +44,24 @@ are all NA:
 
 ``` r
 
-# library(dplyr)
-# library(stringr)
-# 
-# ncol(abc_data)
-# 
-# enroll <- abc_data |> 
-#   filter(str_detect(redcap_event_name, 'Enrollment')) |> 
+library(dplyr)
+#> Warning: package 'dplyr' was built under R version 4.2.3
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+library(stringr)
+#> Warning: package 'stringr' was built under R version 4.2.3
+
+ncol(abc_data)
+#> [1] 0
+
+# enroll <- abc_data |>
+#   filter(str_detect(redcap_event_name, 'Enrollment')) |>
 #   drop_vars_all_na()
 # 
 # enroll

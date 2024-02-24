@@ -13,6 +13,7 @@ Imports:
     dplyr,
     purrr,
     REDCapR,
+    stringr,
     tibble,
     tidyselect
 Suggests: 

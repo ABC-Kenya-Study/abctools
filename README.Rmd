@@ -38,8 +38,11 @@ devtools::install_github("ABC-Kenya-Study/abctools")
 ```{r get.abc.data}
 library(abctools)
 
+# path to .R script containing ABC API token, e.g., "abc_token.R"
+tp <- file.path(Sys.getenv("R_USER"), "R", "access_tokens", "abc_token.R")
 
-## add example to get ABC data from REDcap.
+# collect REDCap data
+abc_data <- get_redcap_data(token_path = tp)
 ```
 
 
@@ -48,15 +51,15 @@ library(abctools)
 Once you have ABC data, `abctools::` also has helper functions for wrangling
 tasks. For instance, `drop_vars_all_na()` deletes columns that are all NA:
 
-```{r wrangle.abc}
+```{r wrangle.abc, warning=FALSE, message=FALSE}
 
-# library(dplyr)
-# library(stringr)
-# 
-# ncol(abc_data)
-# 
-# enroll <- abc_data |> 
-#   filter(str_detect(redcap_event_name, 'Enrollment')) |> 
+library(dplyr)
+library(stringr)
+
+ncol(abc_data)
+
+# enroll <- abc_data |>
+#   filter(str_detect(redcap_event_name, 'Enrollment')) |>
 #   drop_vars_all_na()
 # 
 # enroll

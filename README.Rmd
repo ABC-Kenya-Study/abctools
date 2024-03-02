@@ -70,4 +70,44 @@ enroll
 ncol(enroll)
 ```
 
+
+## Derived variables
+
+Check back here as functions to create derived variables are added.
+
+
+## Output data
+
+`abctools::` also has a straightforward workflow to prepare a flat, wide dataset
+with one participant per row. Data cleaning functions and functions that create
+derived variables are designed to be applied to the data collected from REDCap,
+beforehand.
+
+```{r wide.data}
+
+wide_data <- abc_data |> 
+  
+  # subset to moms
+  filter(str_detect(redcap_event_name, 'Mothers')) |> 
+  
+  # apply data cleaning functions from `abctools::`
+  fix_ptid() |>
+  char_to_numeric() |>
+  remove_returns() |>
+  
+  # add REDCap event name (CRF) abbreviations
+  abb_redcap_events(long_short = 'short') |> 
+  
+  # make wide data, one row per participant 
+  # (note: `wide_data()` needs variable "redcap_event" from `abb_redcap_events()`)
+  wide_data()
+
+# show
+wide_data
+
+# number of rows and columns of wide dataset
+dim(wide_data)
+```
+
+
 Enjoy!

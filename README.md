@@ -31,7 +31,7 @@ tp <- file.path(Sys.getenv("R_USER"), "R", "access_tokens", "abc_token.R")
 
 # collect REDCap data
 abc_data <- get_redcap_data(token_path = tp)
-#> 3,962 records and 2,438 columns were read from REDCap in 8.9 seconds.  The http status code was 200.
+#> 3,962 records and 2,438 columns were read from REDCap in 9.1 seconds.  The http status code was 200.
 ```
 
 ## Helper functions
@@ -83,7 +83,8 @@ ncol(enroll)
 
 ## Derived variables
 
-Check back here as functions to create derived variables are added.
+Check back here for functions that create derived variables are added to
+`abctools`.
 
 ## Output data
 

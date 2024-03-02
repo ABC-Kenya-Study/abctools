@@ -20,8 +20,8 @@ shorten "redcap_event_name" values for easier coding.
 }
 \examples{
 (x <- data.frame(cp_ptid = c("50-22-0001-M1", "50-22-0001-B1"),
-redcap_event_name = c("Enrollment (Arm 1: Mothers)",
-                     "Vaccination & PMTCT (Arm 2: Babies)")))
+                 redcap_event_name = c("Enrollment (Arm 1: Mothers)",
+                                       "Vaccination & PMTCT (Arm 2: Babies)")))
 
 abb_redcap_events(x)
 abb_redcap_events(x, long_short = 'short')

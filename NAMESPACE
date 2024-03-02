@@ -2,6 +2,7 @@
 
 export(abb_redcap_events)
 export(abc_date)
+export(char_to_numeric)
 export(drop_vars_all_na)
 export(fix_ptid)
 export(get_redcap_data)

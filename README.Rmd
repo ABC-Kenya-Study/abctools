@@ -73,8 +73,8 @@ ncol(enroll)
 
 ## Derived variables
 
-Check back here for functions that create derived variables are added to
-`abctools`.
+Functions that create derived variables will be added to `abctools`. Revisit
+this page to check for examples as they are added.
 
 
 ## Output data

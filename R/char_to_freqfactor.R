@@ -12,9 +12,6 @@
 #' @export
 #'
 #' @examples
-#' # specify frequency factor categories
-#' (ff <- c('Not at all', 'Rarely', 'Some days', 'Most days', 'Daily'))
-#'
 #' # example data
 #' (x <- data.frame(var1 = 1:3,
 #'                  var2 = c("Rarely", "Daily", NA),
@@ -22,6 +19,9 @@
 #'
 #' # original classes
 #' sapply(x, class)
+#'
+#' # specify frequency factor categories
+#' (ff <- c('Not at all', 'Rarely', 'Some days', 'Most days', 'Daily'))
 #'
 #' # use function
 #' (x <- char_to_freqfactor(x, ff))

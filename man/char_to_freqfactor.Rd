@@ -19,9 +19,6 @@ Convert character variables in a dataframe to frequency factors with given a
 defined set of values.
 }
 \examples{
-# specify frequency factor categories
-(ff <- c('Not at all', 'Rarely', 'Some days', 'Most days', 'Daily'))
-
 # example data
 (x <- data.frame(var1 = 1:3,
                  var2 = c("Rarely", "Daily", NA),
@@ -29,6 +26,9 @@ defined set of values.
 
 # original classes
 sapply(x, class)
+
+# specify frequency factor categories
+(ff <- c('Not at all', 'Rarely', 'Some days', 'Most days', 'Daily'))
 
 # use function
 (x <- char_to_freqfactor(x, ff))

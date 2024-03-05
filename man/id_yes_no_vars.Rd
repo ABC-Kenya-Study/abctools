@@ -2,7 +2,7 @@
 % Please edit documentation in R/id_yes_no_vars.R
 \name{id_yes_no_vars}
 \alias{id_yes_no_vars}
-\title{ID "Yes/No" Variables}
+\title{ID "yes/no" variables}
 \usage{
 id_yes_no_vars(x)
 }
@@ -13,7 +13,10 @@ id_yes_no_vars(x)
 A character vector of variable names.
 }
 \description{
-Identify variables that contain "Yes/yes" and "No/no" values.
+Identify yes/no variables. Recognizes a variety of values, e.g.: Yes, yes,
+YES, Y, y.
+
+Helpful on its own, also used in \code{yesno_to_logical()} function.
 }
 \examples{
 (x <- data.frame(var1 = c('Yes', 'yes', 'no', 'No'), var2 = 1:4, var3 = c('yes', rep(NA, 3))))

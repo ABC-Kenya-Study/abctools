@@ -16,6 +16,7 @@
 #'     factor_levels = c('Not at all', 'Rarely', 'Some days', 'Most days', 'Daily')
 #'     )
 id_freq_factor_vars <- function(x, factor_levels){
+  x <- abctools::drop_vars_all_na(x)
   lapply(x, stringr::str_detect, paste(factor_levels, collapse = '|')) |>
     lapply(all, na.rm = TRUE) |>
     purrr::keep(isTRUE) |>

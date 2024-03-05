@@ -21,6 +21,8 @@
 #' @return A dataframe containing the new logical variable "calc_active_smoker".
 #' @export
 #'
+#' @importFrom rlang .data
+#'
 #' @examples
 #' # make frequency factor list
 #' (smoke_factor <- list(no = c('Not at all', 'Rarely'),
@@ -43,10 +45,10 @@ active_smoker <- function(x, freq_factor){
 
   x |>
     dplyr::rowwise() |>
-    dplyr::mutate(calc_active_smoker = dplyr::if_else(any(isTRUE(lbt_smoke_cig),
-                                        isTRUE(lbt_smoke_marij),
-                                        pg_exp_cig %in% freq_factor$yes,
-                                        pg_exp_marij %in% freq_factor$yes),
+    dplyr::mutate(calc_active_smoker = dplyr::if_else(any(isTRUE(.data$lbt_smoke_cig),
+                                        isTRUE(.data$lbt_smoke_marij),
+                                        .data$pg_exp_cig %in% freq_factor$yes,
+                                        .data$pg_exp_marij %in% freq_factor$yes),
                                         true = TRUE, false = FALSE) ) |>
     dplyr::ungroup()
 }

@@ -3,6 +3,7 @@
 export(abb_redcap_events)
 export(abc_date)
 export(active_smoker)
+export(char_to_freqfactor)
 export(char_to_numeric)
 export(drop_vars_all_na)
 export(fix_ptid)

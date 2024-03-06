@@ -21,7 +21,7 @@ A dataframe containing the new logical variable
 Work/occupational environmental tobacco smoke exposed.
 }
 \examples{
-#' # make frequency factor list
+# make frequency factor list
 (smoke_factor <- list(no = c('Not at all', 'Rarely'),
                       yes = c('Some days', 'Most days', 'Daily')))
 

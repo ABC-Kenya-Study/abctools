@@ -15,7 +15,7 @@
 #' @importFrom rlang .data
 #'
 #' @examples
-#' #' # make frequency factor list
+#' # make frequency factor list
 #' (smoke_factor <- list(no = c('Not at all', 'Rarely'),
 #'                       yes = c('Some days', 'Most days', 'Daily')))
 #'

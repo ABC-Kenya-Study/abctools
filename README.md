@@ -31,7 +31,7 @@ tp <- file.path(Sys.getenv("R_USER"), "R", "access_tokens", "abc_token.R")
 
 # collect REDCap data
 abc_data <- get_redcap_data(token_path = tp)
-#> 3,974 records and 2,438 columns were read from REDCap in 9.6 seconds.  The http status code was 200.
+#> 3,974 records and 2,438 columns were read from REDCap in 9.4 seconds.  The http status code was 200.
 ```
 
 ## Helper functions
@@ -105,8 +105,6 @@ table(ets$calc_ets_exposed)
 #>      No     Yes Unknown 
 #>     126     230      44
 ```
-
-    #> Warning: package 'ggplot2' was built under R version 4.2.3
 
 <img src="man/figures/README-plot.ets-1.png" width="100%" />
 

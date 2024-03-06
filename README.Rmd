@@ -1,5 +1,8 @@
 ---
 output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -16,10 +19,11 @@ knitr::opts_chunk$set(
 # abctools
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-`abctools` is a collection of functions useful across different ABC analyses and
-projects.
+`abctools` is a collection of functions useful across different ABC
+analyses and projects.
 
 ## Installation
 
@@ -45,11 +49,11 @@ tp <- file.path(Sys.getenv("R_USER"), "R", "access_tokens", "abc_token.R")
 abc_data <- get_redcap_data(token_path = tp)
 ```
 
-
 ## Helper functions
 
-Once you have ABC data, `abctools::` also has helper functions for wrangling
-tasks. For instance, `drop_vars_all_na()` deletes columns that are all NA:
+Once you have ABC data, `abctools::` also has helper functions for
+wrangling tasks. For instance, `drop_vars_all_na()` deletes columns that
+are all NA:
 
 ```{r wrangle.abc.data, warning=FALSE, message=FALSE}
 
@@ -70,12 +74,11 @@ enroll
 ncol(enroll)
 ```
 
-
 ## Derived variables
 
-Functions that create derived variables are also included in `abctools`. Derived
-variables are have the `calc_` prefix. Revisit this page to check for more
-functions as they are added.
+Functions that create derived variables are also included in `abctools`.
+Derived variables are have the `calc_` prefix. Revisit this page to
+check for more functions as they are added.
 
 ```{r derived.variables}
 
@@ -93,7 +96,7 @@ ets <- enroll |>
 table(ets$calc_ets_exposed)
 ```
 
-```{r plot.ets, echo=FALSE}
+```{r plot.ets, echo=FALSE, warning=FALSE}
 
 library(ggplot2)
 
@@ -114,13 +117,12 @@ ggplot(aes(x = calc_ets_exposed, y = perc_ets_exposed, fill = calc_ets_exposed))
   theme(axis.title.x = element_blank(), legend.position = "bottom") 
 ```
 
-
 ## Output data
 
-`abctools::` also has a straightforward workflow to prepare a flat, wide dataset
-with one participant per row. Data cleaning functions and functions that create
-derived variables are designed to be applied to the data collected from REDCap,
-beforehand.
+`abctools::` also has a straightforward workflow to prepare a flat, wide
+dataset with one participant per row. Data cleaning functions and
+functions that create derived variables are designed to be applied to
+the data collected from REDCap, beforehand.
 
 ```{r wide.data}
 
@@ -153,6 +155,5 @@ wide_data
 # number of rows and columns of wide dataset
 dim(wide_data)
 ```
-
 
 Enjoy!

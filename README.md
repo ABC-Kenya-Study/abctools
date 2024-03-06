@@ -31,7 +31,7 @@ tp <- file.path(Sys.getenv("R_USER"), "R", "access_tokens", "abc_token.R")
 
 # collect REDCap data
 abc_data <- get_redcap_data(token_path = tp)
-#> 3,962 records and 2,438 columns were read from REDCap in 8.9 seconds.  The http status code was 200.
+#> 3,974 records and 2,438 columns were read from REDCap in 9.6 seconds.  The http status code was 200.
 ```
 
 ## Helper functions
@@ -55,7 +55,7 @@ enroll <- abc_data |>
   drop_vars_all_na()
 
 enroll
-#> # A tibble: 400 × 523
+#> # A tibble: 400 × 521
 #>    cp_ptid       redcap_event_name        cp_version cp_frmcompldate cp_mom_baby
 #>    <chr>         <chr>                    <chr>      <date>          <chr>      
 #>  1 50-22-0001-M1 Enrollment (Arm 1: Moth… Version 2… 2022-01-10      Mom        
@@ -69,7 +69,7 @@ enroll
 #>  9 50-22-0009-M1 Enrollment (Arm 1: Moth… Version 2… 2022-01-13      Mom        
 #> 10 50-22-0010-M1 Enrollment (Arm 1: Moth… Version 2… 2022-01-13      Mom        
 #> # ℹ 390 more rows
-#> # ℹ 518 more variables: cp_followup_type <chr>, cp_trimester_enrolled <chr>,
+#> # ℹ 516 more variables: cp_followup_type <chr>, cp_trimester_enrolled <chr>,
 #> #   cp_next_visit_date <date>, cp_entry_staff <chr>,
 #> #   cp_entry_staff_othr_spc <chr>, cp_data_entry_date <date>,
 #> #   cp_update_date <date>, client_page_complete <chr>, con_ptid <chr>,
@@ -78,13 +78,37 @@ enroll
 
 # number of columns in 'enroll'
 ncol(enroll)
-#> [1] 523
+#> [1] 521
 ```
 
 ## Derived variables
 
-Functions that create derived variables will be added to `abctools`.
-Revisit this page to check for examples as they are added.
+Functions that create derived variables are also included in `abctools`.
+Derived variables are have the `calc_` prefix. Revisit this page to
+check for more functions as they are added.
+
+``` r
+
+# assess participants' exposure to environmental tobacco smoke (ETS)
+ets <- enroll |> 
+  # subset to relevant variables (optional)
+  select(cp_ptid, lbt_closetosmokers, en_peoplesmoking, en_ind_cig, en_ind_marig, 
+         en_wrk_cig, en_wrk_marij) |> 
+  ets_exposed(
+    freq_factor = list(no = c('Not at all', 'Rarely'), 
+                       yes = c('Some days', 'Most days', 'Daily'))
+    )
+
+# tabulate ETS status
+table(ets$calc_ets_exposed)
+#> 
+#>      No     Yes Unknown 
+#>     126     230      44
+```
+
+    #> Warning: package 'ggplot2' was built under R version 4.2.3
+
+<img src="man/figures/README-plot.ets-1.png" width="100%" />
 
 ## Output data
 
@@ -105,6 +129,12 @@ wide_data <- abc_data |>
   char_to_numeric() |>
   remove_returns() |>
   
+  # add derived variables from `abctools::`
+  active_smoker(
+    freq_factor = list(no = c('Not at all', 'Rarely'), 
+                       yes = c('Some days', 'Most days', 'Daily')) 
+    ) |> 
+  
   # add REDCap event name (CRF) abbreviations
   abb_redcap_events(long_short = 'short') |> 
   
@@ -114,7 +144,7 @@ wide_data <- abc_data |>
 
 # show
 wide_data
-#> # A tibble: 400 × 1,916
+#> # A tibble: 400 × 1,926
 #>    cp_ptid       del_redcap_event_name     del_cp_version del_cp_frmcompldate
 #>    <chr>         <chr>                     <chr>          <date>             
 #>  1 50-22-0001-M1 Delivery (Arm 1: Mothers) Version 2.0    2022-04-13         
@@ -128,7 +158,7 @@ wide_data
 #>  9 50-22-0009-M1 Delivery (Arm 1: Mothers) Version 2.0    2022-06-09         
 #> 10 50-22-0010-M1 Delivery (Arm 1: Mothers) Version 1.0    2022-05-10         
 #> # ℹ 390 more rows
-#> # ℹ 1,912 more variables: del_cp_mom_baby <chr>, del_cp_followup_type <chr>,
+#> # ℹ 1,922 more variables: del_cp_mom_baby <chr>, del_cp_followup_type <chr>,
 #> #   del_cp_next_visit_date <date>, del_cp_entry_staff <chr>,
 #> #   del_cp_data_entry_date <date>, del_cp_update_date <date>,
 #> #   del_client_page_complete <chr>, del_del_ptid <chr>, del_del_version <chr>,
@@ -137,7 +167,7 @@ wide_data
 
 # number of rows and columns of wide dataset
 dim(wide_data)
-#> [1]  400 1916
+#> [1]  400 1926
 ```
 
 Enjoy!

@@ -51,7 +51,7 @@ abc_data <- get_redcap_data(token_path = tp)
 Once you have ABC data, `abctools::` also has helper functions for wrangling
 tasks. For instance, `drop_vars_all_na()` deletes columns that are all NA:
 
-```{r wrangle.abc, warning=FALSE, message=FALSE}
+```{r wrangle.abc.data, warning=FALSE, message=FALSE}
 
 library(dplyr)
 library(stringr)
@@ -73,8 +73,46 @@ ncol(enroll)
 
 ## Derived variables
 
-Functions that create derived variables will be added to `abctools`. Revisit
-this page to check for examples as they are added.
+Functions that create derived variables are also included in `abctools`. Derived
+variables are have the `calc_` prefix. Revisit this page to check for more
+functions as they are added.
+
+```{r derived.variables}
+
+# assess participants' exposure to environmental tobacco smoke (ETS)
+ets <- enroll |> 
+  # subset to relevant variables (optional)
+  select(cp_ptid, lbt_closetosmokers, en_peoplesmoking, en_ind_cig, en_ind_marig, 
+         en_wrk_cig, en_wrk_marij) |> 
+  ets_exposed(
+    freq_factor = list(no = c('Not at all', 'Rarely'), 
+                       yes = c('Some days', 'Most days', 'Daily'))
+    )
+
+# tabulate ETS status
+table(ets$calc_ets_exposed)
+```
+
+```{r plot.ets, echo=FALSE}
+
+library(ggplot2)
+
+# calculate percentages
+ets |> 
+  group_by(calc_ets_exposed) %>% 
+  summarise(count = n()) %>% 
+  mutate(perc_ets_exposed = 100*count/sum(count)) |> 
+  ungroup() |>
+
+# plot ETS status
+ggplot(aes(x = calc_ets_exposed, y = perc_ets_exposed, fill = calc_ets_exposed)) + 
+  geom_bar(stat = "identity") +
+  labs(fill = "ETS exposed", y = "Percentage of Participants (%)" ) +
+  scale_fill_brewer(palette = "Set1") + 
+  scale_y_continuous(expand = expansion(mult = c(0, .025)) ) +
+  theme_bw() + 
+  theme(axis.title.x = element_blank(), legend.position = "bottom") 
+```
 
 
 ## Output data
@@ -95,6 +133,12 @@ wide_data <- abc_data |>
   fix_ptid() |>
   char_to_numeric() |>
   remove_returns() |>
+  
+  # add derived variables from `abctools::`
+  active_smoker(
+    freq_factor = list(no = c('Not at all', 'Rarely'), 
+                       yes = c('Some days', 'Most days', 'Daily')) 
+    ) |> 
   
   # add REDCap event name (CRF) abbreviations
   abb_redcap_events(long_short = 'short') |> 
